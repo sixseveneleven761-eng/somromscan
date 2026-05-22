@@ -98,7 +98,7 @@ def get_dashboard_stats(db: Session = Depends(get_db)):
         },
         "projects_by_status": status_counts,
         "projects_by_forest_type": type_counts,
-        "last_updated": datetime.utcnow().isoformat(),
+        "last_updated": datetime.utcnow().isoformat() + "Z",
     }
 
 
@@ -183,7 +183,7 @@ def get_recent_activity(limit: int = 10, db: Session = Depends(get_db)):
             "icon": "📡",
             "title": f"วัด {'DBH' if r.dbh_cm else 'ความสูง'} ต้นไม้",
             "detail": f"{project.name if project else 'ไม่ทราบ'} — {r.dbh_cm:.1f}cm" if r.dbh_cm else f"{project.name if project else ''} — {r.height_m:.1f}m",
-            "timestamp": r.timestamp.isoformat(),
+            "timestamp": r.timestamp.isoformat() + "Z",
             "is_anomaly": r.is_anomaly,
         })
     
@@ -195,7 +195,7 @@ def get_recent_activity(limit: int = 10, db: Session = Depends(get_db)):
             "icon": "📋",
             "title": f"{e.event_type.title()} กำหนด",
             "detail": f"{project.name if project else ''} — อีก {days} วัน",
-            "timestamp": e.created_at.isoformat(),
+            "timestamp": e.created_at.isoformat() + "Z",
             "is_anomaly": days < 30,
         })
     

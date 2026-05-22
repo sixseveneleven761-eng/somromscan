@@ -73,7 +73,7 @@ def get_verification_calendar(
             "project_name_th": project.name_th,
             "event_type": event.event_type,
             "status": event.status if days >= 0 else "overdue",
-            "due_date": event.due_date.isoformat(),
+            "due_date": event.due_date.isoformat() + "Z",
             "days_remaining": days,
             "severity": calculate_alert_severity(days),
             "title": alert_info["title"],
@@ -123,7 +123,7 @@ def get_active_alerts(db: Session = Depends(get_db)):
                 "title": alert_info["title"],
                 "message": alert_info["message"],
                 "days_remaining": days,
-                "due_date": event.due_date.isoformat(),
+                "due_date": event.due_date.isoformat() + "Z",
                 "event_type": event.event_type,
             })
     
@@ -169,7 +169,7 @@ def schedule_verification(
         "event_id": event.id,
         "project_id": project_id,
         "event_type": event_type,
-        "due_date": target_date.isoformat(),
+        "due_date": target_date.isoformat() + "Z",
         "days_remaining": (target_date - datetime.utcnow()).days,
         "status": "scheduled",
     }

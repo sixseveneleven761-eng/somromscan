@@ -51,7 +51,7 @@ def generate_monitoring_report(project_id: int, db: Session = Depends(get_db)):
         "report_title": f"รายงานการติดตามผลโครงการ (Monitoring Report) — {project.name}",
         "report_type": "Monitoring Report",
         "tgo_template": "T-VER-S-F005-MR",
-        "generated_at": datetime.utcnow().isoformat(),
+        "generated_at": datetime.utcnow().isoformat() + "Z",
         
         # Section 1: Project Info
         "project_info": {
@@ -63,15 +63,15 @@ def generate_monitoring_report(project_id: int, db: Session = Depends(get_db)):
             "province": project.province,
             "area_rai": project.area_rai,
             "area_hectare": project.area_hectare,
-            "project_start_date": project.project_start_date.isoformat() if project.project_start_date else None,
+            "project_start_date": project.project_start_date.isoformat() + "Z" if project.project_start_date else None,
             "crediting_period_years": project.crediting_period_years,
         },
         
         # Section 2: Monitoring Period
         "monitoring_period": {
-            "start": project.project_start_date.isoformat() if project.project_start_date else None,
-            "end": datetime.utcnow().isoformat(),
-            "last_monitoring_date": project.last_monitoring_date.isoformat() if project.last_monitoring_date else None,
+            "start": project.project_start_date.isoformat() + "Z" if project.project_start_date else None,
+            "end": datetime.utcnow().isoformat() + "Z",
+            "last_monitoring_date": project.last_monitoring_date.isoformat() + "Z" if project.last_monitoring_date else None,
         },
         
         # Section 3: Carbon Data
@@ -147,12 +147,12 @@ def get_report_history(project_id: int, db: Session = Depends(get_db)):
         {
             "id": r.id,
             "status": r.status,
-            "monitoring_period_start": r.monitoring_period_start.isoformat() if r.monitoring_period_start else None,
-            "monitoring_period_end": r.monitoring_period_end.isoformat() if r.monitoring_period_end else None,
+            "monitoring_period_start": r.monitoring_period_start.isoformat() + "Z" if r.monitoring_period_start else None,
+            "monitoring_period_end": r.monitoring_period_end.isoformat() + "Z" if r.monitoring_period_end else None,
             "total_co2_tonnes": r.total_co2_tonnes,
             "issuable_credits": r.issuable_credits,
             "qa_qc_passed": r.qa_qc_passed,
-            "generated_at": r.generated_at.isoformat(),
+            "generated_at": r.generated_at.isoformat() + "Z",
         }
         for r in reports
     ]

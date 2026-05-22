@@ -156,7 +156,7 @@ def add_sensor_reading(data: SensorInput, db: Session = Depends(get_db)):
         "confidence_score": reading.confidence_score,
         "is_anomaly": reading.is_anomaly,
         "anomaly_reason": reading.anomaly_reason,
-        "timestamp": reading.timestamp.isoformat(),
+        "timestamp": reading.timestamp.isoformat() + "Z",
     }
 
 
@@ -185,7 +185,7 @@ def get_project_readings(
             "confidence_score": r.confidence_score,
             "is_anomaly": r.is_anomaly,
             "anomaly_reason": r.anomaly_reason,
-            "timestamp": r.timestamp.isoformat(),
+            "timestamp": r.timestamp.isoformat() + "Z",
         }
         for r in readings
     ]
@@ -208,7 +208,7 @@ def get_all_anomalies(limit: int = 20, db: Session = Depends(get_db)):
             "measurement_type": r.measurement_type,
             "dbh_cm": r.dbh_cm,
             "anomaly_reason": r.anomaly_reason,
-            "timestamp": r.timestamp.isoformat(),
+            "timestamp": r.timestamp.isoformat() + "Z",
         }
         for r in readings
     ]
